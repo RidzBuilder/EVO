@@ -1,0 +1,21 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://evo.local/specs/canonical-ir/evo-ir-v1.schema.json",
+  "title":"EVO Canonical IR v1",
+  "type":"object",
+  "required":["ir_version","document_id","intent","composition","constraints","capabilities","provenance","extensions"],
+  "properties":{
+    "ir_version":{"const":"1.0"},
+    "document_id":{"type":"string","minLength":1},
+    "intent":{"type":"object","required":["goal"],"properties":{"goal":{"type":"string"}},"additionalProperties":true},
+    "composition":{"type":"object","required":["scenes"],"properties":{"scenes":{"type":"array","items":{"$ref":"#/$defs/scene"}}},"additionalProperties":true},
+    "constraints":{"type":"array","items":{"type":"object"}},
+    "capabilities":{"type":"array","items":{"type":"object"}},
+    "provenance":{"type":"array","items":{"type":"object"}},
+    "extensions":{"type":"object","additionalProperties":true}
+  },
+  "$defs":{
+    "scene":{"type":"object","required":["scene_id","segments"],"properties":{"scene_id":{"type":"string"},"segments":{"type":"array","items":{"$ref":"#/$defs/segment"}}},"additionalProperties":true},
+    "segment":{"type":"object","required":["segment_id","start","duration"],"properties":{"segment_id":{"type":"string"},"start":{"type":"number","minimum":0},"duration":{"type":"number","exclusiveMinimum":0},"asset_refs":{"type":"array","items":{"type":"string"}},"text_refs":{"type":"array","items":{"type":"string"}},"audio_refs":{"type":"array","items":{"type":"string"}},"effects":{"type":"array","items":{"type":"string"}},"transition":{"type":["string","null"]}},"additionalProperties":true}
+  }
+}
