@@ -1,0 +1,12 @@
+export type Severity="info"|"warning"|"error";
+export type DiagnosticCode="INVALID_INPUT"|"AMBIGUOUS_MAPPING"|"MISSING_CAPABILITY"|"UNSUPPORTED_CONSTRAINT"|"INVALID_IR"|"INTERNAL_ERROR";
+export interface Diagnostic{code:DiagnosticCode;severity:Severity;message:string;path?:string;details?:Record<string,unknown>}
+export interface Provenance{source:string;path?:string;method:string;confidence?:number}
+export interface Constraint{type:string;value:unknown;hard?:boolean;[k:string]:unknown}
+export interface CapabilityRequirement{id:string;required?:boolean;parameters?:Record<string,unknown>;[k:string]:unknown}
+export interface Segment{segment_id:string;start:number;duration:number;asset_refs?:string[];text_refs?:string[];audio_refs?:string[];effects?:string[];transition?:string|null;[k:string]:unknown}
+export interface Scene{scene_id:string;segments:Segment[];[k:string]:unknown}
+export interface CanonicalIR{ir_version:"1.0";document_id:string;intent:{goal:string;[k:string]:unknown};composition:{scenes:Scene[];[k:string]:unknown};constraints:Constraint[];capabilities:CapabilityRequirement[];provenance:Provenance[];extensions:Record<string,unknown>}
+export interface SourceModel{raw:unknown;observations:Array<{path:string;type:string;value?:unknown}>}
+export interface ExecutionPlan{plan_version:"1.0";plan_id:string;ir:CanonicalIR;steps:Array<{id:string;capability:string;parameters?:Record<string,unknown>}>}
+export interface CompilationResult{status:"success"|"failure";ir?:CanonicalIR;plan?:ExecutionPlan;diagnostics:Diagnostic[]}
