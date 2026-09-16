@@ -1,0 +1,4 @@
+import type {CapabilityRequirement,Diagnostic} from "../../evo-core/src/types.js";
+export interface CapabilityBinding {capability:string; implementation:string; version:string; parameters?:Record<string,unknown>}
+export interface CapabilityContext {bindings:CapabilityBinding[]}
+export function resolveCapabilities(reqs:CapabilityRequirement[],ctx:CapabilityContext):{bindings:CapabilityBinding[];diagnostics:Diagnostic[]}{const diagnostics:Diagnostic[]=[];const bindings:CapabilityBinding[]=[];for(const r of reqs){const b=ctx.bindings.find(x=>x.capability===r.id);if(!b){diagnostics.push({code:"MISSING_CAPABILITY",severity:r.required===false?"warning":"error",message:"No implementation binding for capability: "+r.id});}else bindings.push(b)}return{bindings,diagnostics}}
