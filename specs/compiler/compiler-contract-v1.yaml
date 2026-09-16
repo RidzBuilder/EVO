@@ -1,0 +1,15 @@
+version: "1.0"
+operations:
+  inspect: { input: arbitrary, output: source_model }
+  map: { input: source_model, output: canonical_ir }
+  validate: { input: canonical_ir, output: validation_report }
+  resolve: { input: canonical_ir_and_context, output: resolution_report }
+  plan: { input: validated_ir_and_resolution, output: execution_plan }
+  compile: { input: arbitrary, output: compilation_result }
+  execute: { input: validated_execution_plan, output: execution_result }
+invariants:
+  - compile_does_not_execute
+  - execute_requires_valid_plan
+  - provider_schema_is_not_canonical
+  - inference_requires_provenance
+  - constraints_are_preserved_or_explicitly_rejected
