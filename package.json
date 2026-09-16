@@ -1,0 +1,1 @@
+{"name":"evo","private":true,"version":"1.0.0","scripts":{"build":"npm --prefix packages/evo-core run build"},"devDependencies":{"typescript":"^5.0.0","@types/node":"^22.0.0"}}
